@@ -1,9 +1,15 @@
-saida.out:
-	gcc -c main.c 
-	gcc -o main.out main.o -lm
+all: main.out
 
-clean:
-	rm main.out *.o
+main.out: main.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-test: saida.out
+main.o: main.c
+	$(CC) $(CFLAGS) -c $<
+
+.PHONY: test
+test: main.out
 	bash ./testes/test1.sh
+
+.PHONY: clean
+clean:
+	rm -f main.out *.o
