@@ -24,9 +24,9 @@ jobs:
 
       - name: Rodar testes
         run: |
-          if make -q test 2>/dev/null; then
+          if make -q test >/dev/null; then
             make test
-          elif [ -x tests/run_tests.sh ]; then
+          elif [ -x tests/test1.sh ]; then
             bash tests/test1.sh
           else
             echo "Nenhum alvo 'test' no Makefile e nenhum tests/test1.sh encontrado." >&2
