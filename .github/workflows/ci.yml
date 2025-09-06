@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências (gcc, make)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Compilar
+        run: make -j$(nproc)
+
+      - name: Rodar testes
+        run: |
+          if make -q test 2>/dev/null; then
+            make test
+          elif [ -x tests/run_tests.sh ]; then
+            bash tests/test1.sh
+          else
+            echo "Nenhum alvo 'test' no Makefile e nenhum tests/test1.sh encontrado." >&2
+            exit 1
+          fi
