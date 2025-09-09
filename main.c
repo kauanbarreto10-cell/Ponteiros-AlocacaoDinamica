@@ -63,7 +63,7 @@ int main() {
   numbers_read(numbers, size);
   float avg = numbers_average(numbers, size); 
   numbers_show (numbers,size);
-  printf("Media = %.2f", avg);
+  printf("Media = %.2f\n", avg);
   numbers_destroy(numbers);
   return 0;
 }
